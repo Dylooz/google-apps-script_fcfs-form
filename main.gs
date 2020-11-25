@@ -1,13 +1,10 @@
 /*
-
 Copyright 2020 Dylan Burns
-
 Permission to use, copy, modify, and/or
 distribute this software for any purpose with
 or without fee is hereby granted, provided that
 the above copyright notice and this permission
 notice appear in all copies.
-
 THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR
 DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS
 SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
@@ -19,13 +16,10 @@ WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
 OTHER TORTIOUS ACTION, ARISING OUT OF OR IN 
 CONNECTION WITH THE USE OR PERFORMANCE OF 
 THIS SOFTWARE.
-
 */
 
 /*
-
 USE INSTRUCTIONS:
-
 1) Open the form you wish to use this on.
 2) Click the 3 dots icon near your profile picture.
 3) Select "Script Editor".
@@ -42,9 +36,7 @@ USE INSTRUCTIONS:
       
       Failure notification can be set to whatever you want.
       There shouldn't be any errors.
-
 9) Hit save.
-
 The application should now be configured and active.
 */
 
@@ -72,9 +64,16 @@ function onSubmitHandle(e) {
     
     const multiple_choice = question.asMultipleChoiceItem(); // Extract the question as a list of options
     const choices = multiple_choice.getChoices(); // Extract the options
+    Logger.log(choices[0]);
     const choices_new = [];
     choices.forEach(c => { if (c.getValue() != role) { choices_new.push(c); }; }); // Create a new array containing all the old options
                                                                                    // Except the one the user chose
+    if (choices_new.length == 0) { 
+        choices_new.push(multiple_choice.createChoice("All Roles Taken"));
+        multiple_choice.setTitle("Sorry, all speaking roles have been taken.");
+        question.setHelpText("Sorry, all speaking roles have been taken.");
+    }
+  
     multiple_choice.setChoices(choices_new); // Set the list of choices equal to the new array
   
     if (question.getHelpText() == "") { // If the list of taken roles is empty
